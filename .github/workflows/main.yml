@@ -1,0 +1,21 @@
+name: Meta-Engineering CI
+
+on: [push]
+
+jobs:
+  test-environment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt # Uses your pinned requirements
+          pip install gymnasium
+      - name: Smoke Test Environment
+        run: |
+          # Ensures the Gym environment initializes correctly
+          python -c "from rl_env.anpr_gym import ANPROptimizationEnv; env = ANPROptimizationEnv(); env.reset()"

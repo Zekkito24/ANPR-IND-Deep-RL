@@ -1,0 +1,17 @@
+services:
+  anprinddeeprl:
+    image: anprinddeeprl
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    # ADDED: Map local folder to container to see CSVs/Videos instantly
+    volumes:
+      - .:/app
+    # ADDED: Hardware-Awareness for YOLO models
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
